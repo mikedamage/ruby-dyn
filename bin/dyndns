@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+#
+# = Ruby DynDNS CLI Client
+# by Mike Green
+
+require "optparse"
+require "rubygems"
+require "dyndns"
