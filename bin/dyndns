@@ -6,3 +6,35 @@
 require "optparse"
 require "rubygems"
 require "dyndns"
+
+class DNSApp
+	
+	def initialize(args)
+		@args = args
+		@config = {
+			:username => nil,
+			:password => nil,
+			:domain => nil,
+			:verbose => false
+		}
+	end
+	
+	def run
+		if parse_opts
+			
+		else
+			puts "Invalid options or configuration"
+		end
+	end
+	
+	def parse_opts
+		opts = OptionParser.new
+		opts.banner = "RubyDYN Dynamic DNS Agent"
+		opts.on("-u", "--username", "DynDns.org username") {|u| @config[:username] = u.to_s }
+		opts.on("-p", "--password", "DynDns.org password") {|p| @config[:password] = p.to_s }
+		opts.on("-d", "--domain", "DynDns.org domain name (i.e. mydomain.homedns.org)") {|d| @config[:domain] = d.to_s }
+		opts.on("-v", "--verbose", "Displays a message each step of the way") { @config[:verbose] = true }
+		opts.on("-h", "--help", "Displays usage information and exits") { puts opts; exit 0; }
+		true if opts.parse!(@args) rescue return false
+	end
+end
